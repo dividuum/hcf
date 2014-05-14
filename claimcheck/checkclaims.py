@@ -1,7 +1,6 @@
 # Public domain. Do whatever you want with this code - fw@dividuum.de
 
 import sys
-import csv
 
 def range_intersect(min1, max1, min2, max2):
     return not (min1 > max2 or max1 < min2)
@@ -115,9 +114,9 @@ class Validator(object):
 
 
 def read_claims_from_csv(filename, validator):
-    with open(filename, 'rb') as csvfile:
-        reader = csv.reader(csvfile, delimiter=' ')
-        for faction, x1, y1, x2, y2 in reader:
+    with open(filename, 'rb') as f:
+        for line in f:
+            faction, x1, y1, x2, y2 = line.strip().split()
             validator.add_claim(Claim(int(x1), int(y1), int(x2), int(y2), faction))
     
 def main(csv_file):
